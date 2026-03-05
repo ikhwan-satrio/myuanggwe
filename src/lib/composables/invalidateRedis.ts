@@ -6,7 +6,8 @@ export async function invalidateUserCache(userId: string, orgId?: string | null)
     `dashboard:user:${userId}`,
     `wallets:user:${userId}`,
     `transactions:user:${userId}`,
-    `categories:user:${userId}`
+    `categories:user:${userId}`,
+    `chart:user:${userId}`
   ]
 
   if (orgId) {
@@ -14,7 +15,8 @@ export async function invalidateUserCache(userId: string, orgId?: string | null)
       `dashboard:org:${orgId}`,
       `wallets:org:${orgId}`,
       `transactions:org:${orgId}`,
-      `categories:org:${orgId}`
+      `categories:org:${orgId}`,
+      `chart:org:${orgId}`
     )
   }
 

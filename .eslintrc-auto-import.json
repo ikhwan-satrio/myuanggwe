@@ -1,10 +1,13 @@
 {
   "globals": {
     "Card": true,
+    "Chart": true,
+    "ChartConfig": true,
     "Collapsible": true,
     "Command": true,
     "Dialog": true,
     "DropdownMenu": true,
+    "Empty": true,
     "LayoutData": true,
     "Popover": true,
     "Select": true,

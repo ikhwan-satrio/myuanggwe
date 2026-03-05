@@ -7,10 +7,13 @@
 export {}
 declare global {
   const Card: typeof import('$lib/components/ui/card')
+  const Chart: typeof import('$lib/components/ui/chart')
+  const ChartConfig: typeof import('$lib/components/ui/chart').ChartConfig
   const Collapsible: typeof import('$lib/components/ui/collapsible')
   const Command: typeof import('$lib/components/ui/command')
   const Dialog: typeof import('$lib/components/ui/dialog')
   const DropdownMenu: typeof import('$lib/components/ui/dropdown-menu')
+  const Empty: typeof import('$lib/components/ui/empty')
   const Popover: typeof import('$lib/components/ui/popover')
   const Select: typeof import('$lib/components/ui/select')
   const Sheet: typeof import('$lib/components/ui/sheet')

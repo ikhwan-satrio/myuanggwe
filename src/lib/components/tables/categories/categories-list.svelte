@@ -16,8 +16,8 @@
 		mutationKey: ['delete-category'],
 		mutationFn: async ({ id }: { id: string }) => {
 			const res = await client.categories.remove({ id }).delete();
-			console.log(res.data?.message)
-      if (res.data?.message) toast.message(res.data.message);
+			console.log(res.data?.message);
+			if (res.data?.message) toast.message(res.data.message);
 		},
 		onSuccess() {
 			categoryQuery.refetch();
@@ -53,7 +53,7 @@
 			</Card.Root>
 		{/each}
 	{:else}
-		{#each [0,1,2,3,4]}
+		{#each [0, 1, 2, 3, 4]}
 			<Card.Root>
 				<Card.Header class="flex flex-row items-center justify-between space-y-0 pb-2">
 					<Card.Title class="text-sm font-medium">

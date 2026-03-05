@@ -1,4 +1,7 @@
 <script lang="ts">
+	import DashboardChart from '$lib/components/charts/DashboardChart.svelte';
+	import WalletChart from '$lib/components/charts/WalletChart.svelte';
+
 	// Query dashboard data
 	const dashboardQuery = createQuery(() => ({
 		queryKey: ['dashboard'],
@@ -119,6 +122,95 @@
 			</Card.Root>
 		</div>
 	{/if}
+
+	<!-- Summary Chart -->
+	<div class="grid gap-4 md:grid-cols-2">
+		<Card.Root>
+			<Card.Header class="flex flex-row items-center justify-between pb-2">
+				<div>
+					<Card.Title>Budget Summary</Card.Title>
+					<Card.Description>Monthly income vs expense ratio</Card.Description>
+				</div>
+				<Lucide name="BarChart" class="h-4 w-4 text-muted-foreground" />
+			</Card.Header>
+			<Card.Content>
+				<DashboardChart />
+			</Card.Content>
+		</Card.Root>
+
+		<Card.Root>
+			<Card.Header class="flex flex-row items-center justify-between pb-2">
+				<div>
+					<Card.Title>Wallet Distribution</Card.Title>
+					<Card.Description>Balance share across your accounts</Card.Description>
+				</div>
+				<Lucide name="PieChart" class="h-4 w-4 text-muted-foreground" />
+			</Card.Header>
+			<Card.Content class="place-content-center h-full">
+				<Empty.Root>
+					<Empty.Header>
+						<Empty.Media variant="icon">
+							<Lucide name="ChartNetwork" />
+						</Empty.Media>
+						<Empty.Title>this feature is currently under contruction</Empty.Title>
+					</Empty.Header>
+				</Empty.Root>
+				<!-- {#if isLoading} -->
+				<!-- 	<div class="flex items-center justify-center h-52"> -->
+				<!-- 		<Skeleton class="h-40 w-40 rounded-full" /> -->
+				<!-- 	</div> -->
+				<!-- {:else} -->
+				<!-- 	<WalletChart wallets={dashboardData.walletList} /> -->
+				<!-- {/if} -->
+			</Card.Content>
+		</Card.Root>
+	</div>
+
+	<!-- Quick Insights -->
+	<Card.Root>
+		<Card.Header class="flex flex-row items-center justify-between pb-2">
+			<div>
+				<Card.Title>Quick Insights</Card.Title>
+				<Card.Description>Analysis based on your current data</Card.Description>
+			</div>
+			<Lucide name="Zap" class="h-4 w-4 text-primary" />
+		</Card.Header>
+		<Card.Content>
+			<div class="grid gap-4 md:grid-cols-2">
+				<div class="flex items-center gap-4 rounded-lg border bg-muted/30 p-4">
+					<div class="rounded-full bg-primary/10 p-3">
+						<Lucide name="TrendingUp" class="h-5 w-5 text-primary" />
+					</div>
+					<div>
+						<p class="text-sm font-medium">Monthly Savings</p>
+						<p class="text-2xl font-bold">
+							{formatIDR(dashboardData.monthlyIncome - dashboardData.monthlyExpense)}
+						</p>
+					</div>
+				</div>
+				<div class="flex items-center gap-4 rounded-lg border bg-muted/30 p-4">
+					<div class="rounded-full bg-muted p-3">
+						<Lucide name="Shield" class="h-5 w-5 text-muted-foreground" />
+					</div>
+					<div>
+						<p class="text-sm font-medium">Financial Status</p>
+						<p class="text-sm text-muted-foreground">
+							{#if dashboardData.monthlyIncome > dashboardData.monthlyExpense}
+								Healthy! You are saving {(
+									(1 - dashboardData.monthlyExpense / (dashboardData.monthlyIncome || 1)) *
+									100
+								).toFixed(0)}% of your income.
+							{:else if dashboardData.monthlyIncome === 0 && dashboardData.monthlyExpense === 0}
+								No activity yet this month.
+							{:else}
+								Attention! You are spending more than you earn this month.
+							{/if}
+						</p>
+					</div>
+				</div>
+			</div>
+		</Card.Content>
+	</Card.Root>
 
 	<!-- Recent Transactions -->
 	<Card.Root>

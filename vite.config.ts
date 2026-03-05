@@ -27,7 +27,7 @@ export default defineConfig({
         /[\\/]node_modules[\\/]/,
         /[\\/]\.git[\\/]/,
         /[\\/]\.svelte-kit[\\/]/,
-        /[\\/]ui[\\/](card|popover|command|dialog|dropdown-menu|select|sheet|table|tabs|tooltip|collapsible)[\\/]/
+        /[\\/]ui[\\/](card|popover|command|dialog|dropdown-menu|select|sheet|table|tabs|tooltip|collapsible|chart|empty)[\\/]/
       ],
       eslintrc: {
         enabled: true,
@@ -39,6 +39,11 @@ export default defineConfig({
       include: [
         /\.[tj]sx?$/,
         /\.svelte$/
+      ],
+      // EXCLUDE node_modules from auto-import to avoid conflicts with libraries
+      exclude: [
+        /[\\/]node_modules[\\/]/,
+        /[\\/]\.git[\\/]/,
       ],
 
       imports: [
@@ -69,7 +74,9 @@ export default defineConfig({
           '$lib/components/ui/table': [['*', 'Table']],
           '$lib/components/ui/tabs': [['*', 'Tabs']],
           '$lib/components/ui/tooltip': [['*', 'Tooltip']],
-          '$lib/components/ui/collapsible': [['*', 'Collapsible']]
+          '$lib/components/ui/collapsible': [['*', 'Collapsible']],
+          '$lib/components/ui/chart': [['*', 'Chart'], 'ChartConfig'],
+          '$lib/components/ui/empty': [['*', 'Empty']]
         },
       ],
 
