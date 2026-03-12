@@ -1,12 +1,12 @@
 import type { RequestHandler } from '@sveltejs/kit'
 import { Elysia } from 'elysia'
 import cors from '@elysiajs/cors'
-import { dashboardGroup } from '$lib/server/groups/dashboard'
-import { walletsGroup } from '$lib/server/groups/wallets'
-import { transactionsGroup } from '$lib/server/groups/transactions'
-import { categoriesGroup } from '$lib/server/groups/categories'
-import { orgsGroups } from '$lib/server/groups/orgs/users'
-import { manageOrgsGroup } from '$lib/server/groups/orgs/manage'
+import { dashboardGroup } from '$lib/server/rest-api/groups/dashboard'
+import { walletsGroup } from '$lib/server/rest-api/groups/wallets'
+import { transactionsGroup } from '$lib/server/rest-api/groups/transactions'
+import { categoriesGroup } from '$lib/server/rest-api/groups/categories'
+import { orgsGroups } from '$lib/server/rest-api/groups/orgs/users'
+import { manageOrgsGroup } from '$lib/server/rest-api/groups/orgs/manage'
 
 const layoutGroup = createServer()
   .get(

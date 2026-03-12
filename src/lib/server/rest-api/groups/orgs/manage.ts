@@ -2,7 +2,6 @@ import { eq, and    } from 'drizzle-orm'
 import { db } from '$lib/server/db'
 import * as schema from '$lib/server/db/schema'
 
-
 export const manageOrgsGroup = createServer({ name:'manage-orgs',prefix:'/manage-orgs'})
       .get('/', async ({ activeOrg, user }) => {
         if (!activeOrg) return { org: null, members: [] }

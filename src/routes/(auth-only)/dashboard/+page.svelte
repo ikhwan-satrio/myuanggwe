@@ -1,7 +1,4 @@
 <script lang="ts">
-	import DashboardChart from '$lib/components/charts/DashboardChart.svelte';
-	import WalletChart from '$lib/components/charts/WalletChart.svelte';
-
 	// Query dashboard data
 	const dashboardQuery = createQuery(() => ({
 		queryKey: ['dashboard'],
@@ -122,49 +119,6 @@
 			</Card.Root>
 		</div>
 	{/if}
-
-	<!-- Summary Chart -->
-	<div class="grid gap-4 md:grid-cols-2">
-		<Card.Root>
-			<Card.Header class="flex flex-row items-center justify-between pb-2">
-				<div>
-					<Card.Title>Budget Summary</Card.Title>
-					<Card.Description>Monthly income vs expense ratio</Card.Description>
-				</div>
-				<Lucide name="BarChart" class="h-4 w-4 text-muted-foreground" />
-			</Card.Header>
-			<Card.Content>
-				<DashboardChart />
-			</Card.Content>
-		</Card.Root>
-
-		<Card.Root>
-			<Card.Header class="flex flex-row items-center justify-between pb-2">
-				<div>
-					<Card.Title>Wallet Distribution</Card.Title>
-					<Card.Description>Balance share across your accounts</Card.Description>
-				</div>
-				<Lucide name="PieChart" class="h-4 w-4 text-muted-foreground" />
-			</Card.Header>
-			<Card.Content class="place-content-center h-full">
-				<Empty.Root>
-					<Empty.Header>
-						<Empty.Media variant="icon">
-							<Lucide name="ChartNetwork" />
-						</Empty.Media>
-						<Empty.Title>this feature is currently under contruction</Empty.Title>
-					</Empty.Header>
-				</Empty.Root>
-				<!-- {#if isLoading} -->
-				<!-- 	<div class="flex items-center justify-center h-52"> -->
-				<!-- 		<Skeleton class="h-40 w-40 rounded-full" /> -->
-				<!-- 	</div> -->
-				<!-- {:else} -->
-				<!-- 	<WalletChart wallets={dashboardData.walletList} /> -->
-				<!-- {/if} -->
-			</Card.Content>
-		</Card.Root>
-	</div>
 
 	<!-- Quick Insights -->
 	<Card.Root>
