@@ -9,8 +9,9 @@
 	const walletsForm = createForm(() => ({
 		defaultValues: {
 			name: '',
-			type: 'cash' as 'cash' | 'bank' | 'credit_card' | null,
-			balance: 2000
+			type: 'cash' as 'cash' | 'bank' | 'credit_card',
+			balance: 2000,
+			currency: 'IDR'
 		},
 		validators: {
 			onChange: walletSchema,
@@ -28,7 +29,15 @@
 		{ value: 'cash', label: 'Tunai (Cash)' },
 		{ value: 'bank', label: 'Bank / E-Wallet' },
 		{ value: 'credit_card', label: 'Kartu Kredit' }
-	];
+	] as const;
+
+	const currencyOptions = [
+		{ value: 'IDR', label: 'IDR - Rupiah' },
+		{ value: 'USD', label: 'USD - Dollar' },
+		{ value: 'EUR', label: 'EUR - Euro' },
+		{ value: 'GBP', label: 'GBP - Pound' },
+		{ value: 'JPY', label: 'JPY - Yen' }
+	] as const;
 </script>
 
 <form
@@ -87,34 +96,76 @@
 		</walletsForm.Field>
 	</div>
 
-	<div class="space-y-2">
-		<walletsForm.Field name="type">
-			{#snippet children(field)}
-				<Label>Tipe</Label>
-				<Select.Root type="single" name="type" onValueChange={field.handleChange}>
-					<Select.Trigger
-						class={buttonVariants({
-							variant: 'outline',
-							class: 'w-full justify-between text-left font-normal'
-						})}
+	<div class="grid grid-cols-2 gap-4">
+		<div class="space-y-2">
+			<walletsForm.Field name="type">
+				{#snippet children(field)}
+					<Label>Tipe</Label>
+					<Select.Root 
+						type="single" 
+						name="type" 
+						value={field.state.value}
+						onValueChange={(val) => field.handleChange(val as 'cash' | 'bank' | 'credit_card')}
 					>
-						{typeOptions.find((t) => t.value === field.state.value)?.label}
-					</Select.Trigger>
-					<Select.Content>
-						{#each typeOptions as option (option.value)}
-							<Select.Item value={option.value} label={option.label}>
-								{option.label}
-							</Select.Item>
-						{/each}
-					</Select.Content>
-				</Select.Root>
-				{#if field.state.meta.errors.length > 0}
-					<p class="text-sm font-medium text-destructive">
-						{field.state.meta.errors[0]?.message}
-					</p>
-				{/if}
-			{/snippet}
-		</walletsForm.Field>
+						<Select.Trigger
+							class={buttonVariants({
+								variant: 'outline',
+								class: 'w-full justify-between text-left font-normal'
+							})}
+						>
+							{typeOptions.find((t) => t.value === field.state.value)?.label}
+						</Select.Trigger>
+						<Select.Content>
+							{#each typeOptions as option (option.value)}
+								<Select.Item value={option.value} label={option.label}>
+									{option.label}
+								</Select.Item>
+							{/each}
+						</Select.Content>
+					</Select.Root>
+					{#if field.state.meta.errors.length > 0}
+						<p class="text-sm font-medium text-destructive">
+							{field.state.meta.errors[0]?.message}
+						</p>
+					{/if}
+				{/snippet}
+			</walletsForm.Field>
+		</div>
+
+		<div class="space-y-2">
+			<walletsForm.Field name="currency">
+				{#snippet children(field)}
+					<Label>Mata Uang</Label>
+					<Select.Root
+						type="single"
+						name="currency"
+						value={field.state.value}
+						onValueChange={field.handleChange}
+					>
+						<Select.Trigger
+							class={buttonVariants({
+								variant: 'outline',
+								class: 'w-full justify-between text-left font-normal'
+							})}
+						>
+							{currencyOptions.find((c) => c.value === field.state.value)?.label ?? 'Pilih Mata Uang'}
+						</Select.Trigger>
+						<Select.Content>
+							{#each currencyOptions as option (option.value)}
+								<Select.Item value={option.value} label={option.label}>
+									{option.label}
+								</Select.Item>
+							{/each}
+						</Select.Content>
+					</Select.Root>
+					{#if field.state.meta.errors.length > 0}
+						<p class="text-sm font-medium text-destructive">
+							{field.state.meta.errors[0]?.message}
+						</p>
+					{/if}
+				{/snippet}
+			</walletsForm.Field>
+		</div>
 	</div>
 
 	<walletsForm.Subscribe selector={(state) => [state.isSubmitting, state.canSubmit]}>

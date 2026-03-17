@@ -7,6 +7,7 @@ declare global {
     const Input: typeof import("./../lib/components/ui/input/input.svelte")["default"]
     const Label: typeof import("./../lib/components/ui/label/label.svelte")["default"]
     const Lucide: typeof import("./../lib/components/utils/Lucide.svelte")["default"]
+    const Progress: typeof import("./../lib/components/ui/progress/progress.svelte")["default"]
     const Separator: typeof import("./../lib/components/ui/separator/separator.svelte")["default"]
     const SheetLayoutForm: typeof import("./../lib/components/utils/SheetLayoutForm.svelte")["default"]
     const Skeleton: typeof import("./../lib/components/ui/skeleton/skeleton.svelte")["default"]

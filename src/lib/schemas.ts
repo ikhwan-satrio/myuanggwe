@@ -23,42 +23,52 @@ export const transactionSchema = z.object({
   type: z.enum(['income', 'expense', 'transfer']),
   amount: z.number().positive('Jumlah harus lebih dari 0'),
   walletId: z.string().min(1, 'Pilih dompet'),
-  toWalletId: z.string().optional().nullable(),
-  categoryId: z.string().optional().nullable(),
-  description: z.string().optional().nullable(),
+  toWalletId: z.string(),
+  categoryId: z.string(),
+  description: z.string(),
   date: z.string().min(1, 'Tanggal harus diisi')
-}).refine((data) => {
-  // Jika transfer, toWalletId harus diisi
-  if (data.type === 'transfer') {
-    return !!data.toWalletId;
-  }
-  return true;
-}, {
-  message: 'Dompet tujuan harus diisi untuk transfer',
-  path: ['toWalletId']
-}).refine((data) => {
-  // Jika bukan transfer, categoryId harus diisi
-  if (data.type !== 'transfer') {
-    return !!data.categoryId;
-  }
-  return true;
-}, {
-  message: 'Kategori harus diisi',
-  path: ['categoryId']
 });
 
 // wallets
 export const walletSchema = z.object({
   name: z.string().min(3, 'Nama dompet minimal 3 karakter'),
-  type: z.enum(['cash', 'bank', 'credit_card']).default('cash'),
-  balance: z.number().min(0, 'Saldo awal tidak boleh negatif')
+  type: z.enum(['cash', 'bank', 'credit_card']),
+  balance: z.number().min(0, 'Saldo awal tidak boleh negatif'),
+  currency: z.string().min(1, 'Pilih mata uang')
+});
+
+// budgets
+export const budgetSchema = z.object({
+  amount: z.number().positive('Jumlah harus lebih dari 0'),
+  period: z.enum(['monthly', 'yearly']),
+  categoryId: z.string().min(1, 'Pilih kategori')
+});
+
+// recurring transactions
+export const recurringTransactionSchema = z.object({
+  amount: z.number().positive('Jumlah harus lebih dari 0'),
+  type: z.enum(['income', 'expense', 'transfer']),
+  description: z.string(),
+  frequency: z.enum(['daily', 'weekly', 'monthly', 'yearly']),
+  startDate: z.string().min(1, 'Tanggal mulai harus diisi'),
+  walletId: z.string().min(1, 'Pilih dompet'),
+  toWalletId: z.string(),
+  categoryId: z.string()
+});
+
+// financial goals
+export const financialGoalSchema = z.object({
+  name: z.string().min(3, 'Nama target minimal 3 karakter'),
+  targetAmount: z.number().positive('Target jumlah harus lebih dari 0'),
+  deadline: z.string(),
+  walletId: z.string().min(1, 'Pilih dompet sumber')
 });
 
 // categories
 export const categorySchema = z.object({
   name: z.string().min(2, 'Minimal 2 karakter'),
   type: z.enum(['income', 'expense']),
-  icon: z.string().default('Tag').optional() // Nama icon Lucide
+  icon: z.string()
 });
 
 // organizations
@@ -69,7 +79,7 @@ export const organizationSchema = z.object({
 
 export const inviteSchema = z.object({
   email: z.email('Email tidak valid'),
-  role: z.enum(['admin', 'member']).default('member')
+  role: z.enum(['admin', 'member'])
 });
 
 export const joinSchema = z.object({

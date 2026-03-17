@@ -148,6 +148,7 @@ export const wallets = sqliteTable('wallets', {
   name: text('name').notNull(),
   type: text('type').default('cash').notNull(),
   balance: integer('balance').default(0).notNull(),
+  currency: text('currency').default('IDR').notNull(),
   organizationId: text('organization_id').references(() => organization.id, {
     onDelete: 'cascade'
   }),
@@ -182,6 +183,8 @@ export const transactions = sqliteTable('transactions', {
   amount: integer('amount').notNull(),
   type: text('type', { enum: ['income', 'expense', 'transfer'] }).notNull(),
   description: text('description'),
+  currency: text('currency').default('IDR').notNull(),
+  exchangeRate: integer('exchange_rate').default(1000000).notNull(), // Multiplied by 1,000,000 for precision
   // UBAH: timestamp_ms → timestamp
   date: integer('date', { mode: 'timestamp' }).notNull(),
   walletId: text('wallet_id')
@@ -202,6 +205,70 @@ export const transactions = sqliteTable('transactions', {
     .notNull()
 });
 
+export const budgets = sqliteTable('budgets', {
+  id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
+  amount: integer('amount').notNull(),
+  period: text('period', { enum: ['monthly', 'yearly'] }).default('monthly').notNull(),
+  categoryId: text('category_id')
+    .notNull()
+    .references(() => categories.id, { onDelete: 'cascade' }),
+  userId: text('user_id')
+    .notNull()
+    .references(() => user.id, { onDelete: 'cascade' }),
+  organizationId: text('organization_id').references(() => organization.id, {
+    onDelete: 'cascade'
+  }),
+  createdAt: integer('created_at', { mode: 'timestamp' })
+    .default(sql`(unixepoch())`)
+    .notNull()
+});
+
+export const recurringTransactions = sqliteTable('recurring_transactions', {
+  id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
+  amount: integer('amount').notNull(),
+  type: text('type', { enum: ['income', 'expense', 'transfer'] }).notNull(),
+  description: text('description'),
+  frequency: text('frequency', { enum: ['daily', 'weekly', 'monthly', 'yearly'] }).notNull(),
+  startDate: integer('start_date', { mode: 'timestamp' }).notNull(),
+  nextRunDate: integer('next_run_date', { mode: 'timestamp' }).notNull(),
+  lastRunDate: integer('last_run_date', { mode: 'timestamp' }),
+  walletId: text('wallet_id')
+    .notNull()
+    .references(() => wallets.id, { onDelete: 'cascade' }),
+  toWalletId: text('to_wallet_id').references(() => wallets.id, { onDelete: 'cascade' }),
+  categoryId: text('category_id').references(() => categories.id, { onDelete: 'set null' }),
+  userId: text('user_id')
+    .notNull()
+    .references(() => user.id, { onDelete: 'cascade' }),
+  organizationId: text('organization_id').references(() => organization.id, {
+    onDelete: 'cascade'
+  }),
+  isActive: integer('is_active', { mode: 'boolean' }).default(true).notNull(),
+  createdAt: integer('created_at', { mode: 'timestamp' })
+    .default(sql`(unixepoch())`)
+    .notNull()
+});
+
+export const financialGoals = sqliteTable('financial_goals', {
+  id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
+  name: text('name').notNull(),
+  targetAmount: integer('target_amount').notNull(),
+  currentAmount: integer('current_amount').default(0).notNull(),
+  deadline: integer('deadline', { mode: 'timestamp' }),
+  walletId: text('wallet_id')
+    .notNull()
+    .references(() => wallets.id, { onDelete: 'cascade' }),
+  userId: text('user_id')
+    .notNull()
+    .references(() => user.id, { onDelete: 'cascade' }),
+  organizationId: text('organization_id').references(() => organization.id, {
+    onDelete: 'cascade'
+  }),
+  createdAt: integer('created_at', { mode: 'timestamp' })
+    .default(sql`(unixepoch())`)
+    .notNull()
+});
+
 // ============= RELATIONS =============
 
 export const walletRelations = relations(wallets, ({ one, many }) => ({
@@ -213,7 +280,9 @@ export const walletRelations = relations(wallets, ({ one, many }) => ({
     fields: [wallets.userId],
     references: [user.id]
   }),
-  transactions: many(transactions)
+  transactions: many(transactions),
+  recurringTransactions: many(recurringTransactions),
+  financialGoals: many(financialGoals)
 }));
 
 export const categoryRelations = relations(categories, ({ one, many }) => ({
@@ -225,7 +294,9 @@ export const categoryRelations = relations(categories, ({ one, many }) => ({
     fields: [categories.userId],
     references: [user.id]
   }),
-  transactions: many(transactions)
+  transactions: many(transactions),
+  budgets: many(budgets),
+  recurringTransactions: many(recurringTransactions)
 }));
 
 export const transactionRelations = relations(transactions, ({ one }) => ({
@@ -251,6 +322,59 @@ export const transactionRelations = relations(transactions, ({ one }) => ({
   })
 }));
 
+export const budgetRelations = relations(budgets, ({ one }) => ({
+  category: one(categories, {
+    fields: [budgets.categoryId],
+    references: [categories.id]
+  }),
+  user: one(user, {
+    fields: [budgets.userId],
+    references: [user.id]
+  }),
+  organization: one(organization, {
+    fields: [budgets.organizationId],
+    references: [organization.id]
+  })
+}));
+
+export const recurringTransactionRelations = relations(recurringTransactions, ({ one }) => ({
+  wallet: one(wallets, {
+    fields: [recurringTransactions.walletId],
+    references: [wallets.id]
+  }),
+  toWallet: one(wallets, {
+    fields: [recurringTransactions.toWalletId],
+    references: [wallets.id]
+  }),
+  category: one(categories, {
+    fields: [recurringTransactions.categoryId],
+    references: [categories.id]
+  }),
+  user: one(user, {
+    fields: [recurringTransactions.userId],
+    references: [user.id]
+  }),
+  organization: one(organization, {
+    fields: [recurringTransactions.organizationId],
+    references: [organization.id]
+  })
+}));
+
+export const financialGoalRelations = relations(financialGoals, ({ one }) => ({
+  wallet: one(wallets, {
+    fields: [financialGoals.walletId],
+    references: [wallets.id]
+  }),
+  user: one(user, {
+    fields: [financialGoals.userId],
+    references: [user.id]
+  }),
+  organization: one(organization, {
+    fields: [financialGoals.organizationId],
+    references: [organization.id]
+  })
+}));
+
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),
@@ -258,7 +382,10 @@ export const userRelations = relations(user, ({ many }) => ({
   invitations: many(invitation),
   wallets: many(wallets),
   categories: many(categories),
-  transactions: many(transactions)
+  transactions: many(transactions),
+  budgets: many(budgets),
+  recurringTransactions: many(recurringTransactions),
+  financialGoals: many(financialGoals)
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({
@@ -280,7 +407,10 @@ export const organizationRelations = relations(organization, ({ many }) => ({
   invitations: many(invitation),
   wallets: many(wallets),
   categories: many(categories),
-  transactions: many(transactions)
+  transactions: many(transactions),
+  budgets: many(budgets),
+  recurringTransactions: many(recurringTransactions),
+  financialGoals: many(financialGoals)
 }));
 
 export const memberRelations = relations(member, ({ one }) => ({
@@ -312,3 +442,6 @@ export type UserType = typeof user.$inferSelect;
 export type WalletType = typeof wallets.$inferSelect;
 export type CategoryType = typeof categories.$inferSelect;
 export type TransactionType = typeof transactions.$inferSelect;
+export type BudgetType = typeof budgets.$inferSelect;
+export type RecurringTransactionType = typeof recurringTransactions.$inferSelect;
+export type FinancialGoalType = typeof financialGoals.$inferSelect;

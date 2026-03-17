@@ -58,7 +58,7 @@
   "dependencies": {
     "@elysiajs/cors": "^1.4.1",
     "@elysiajs/eden": "^1.4.6",
-    "@tanstack/svelte-form": "^1.28.0",
+    "@tanstack/svelte-form": "^1.28.5",
     "@tanstack/svelte-query": "^6.0.18",
     "@tanstack/svelte-query-devtools": "^6.0.3",
     "@upstash/redis": "^1.36.2",

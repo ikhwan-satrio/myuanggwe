@@ -11,7 +11,7 @@ export const load = async ({ fetch, depends }) => {
       },
     },
   })
-
+  
   try {
     const res = await fetch('/api/layout')
     const data = await res.json() as LayoutData

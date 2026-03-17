@@ -13,7 +13,10 @@
 		{ title: 'Dashboard', icon: 'ChartPie', href: '/dashboard' },
 		{ title: 'Transaksi', icon: 'ArrowLeftRight', href: '/transactions' },
 		{ title: 'Dompet', icon: 'Wallet', href: '/wallets' },
-		{ title: 'Kategori', icon: 'Layers', href: '/categories' }
+		{ title: 'Kategori', icon: 'Layers', href: '/categories' },
+		{ title: 'Anggaran', icon: 'PiggyBank', href: '/budgets' },
+		{ title: 'Berulang', icon: 'Repeat', href: '/recurring' },
+		{ title: 'Target Menabung', icon: 'Target', href: '/goals' }
 	];
 
 	let { activeOrg, organizations, user } = $props<{

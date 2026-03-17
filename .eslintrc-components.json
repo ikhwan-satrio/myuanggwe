@@ -4,6 +4,7 @@
         "Button": true,
         "Input": true,
         "Label": true,
+        "Progress": true,
         "Separator": true,
         "Skeleton": true,
         "Sonner": true,
