@@ -5,6 +5,7 @@ yarn.lock
 bun.lock
 bun.lockb
 
+src/lib/components/ui/
 # Miscellaneous
 /static/
 /drizzle/

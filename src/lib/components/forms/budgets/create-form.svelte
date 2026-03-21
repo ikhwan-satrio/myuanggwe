@@ -27,7 +27,7 @@
 		},
 		onSubmit: async ({ value }) => {
 			try {
-        //@ts-ignore
+				//@ts-ignore
 				const res = await client.budgets.create.post(value);
 				if (res.data?.success) {
 					toast.success(res.data.message);
@@ -125,9 +125,9 @@
 			{#snippet children(field)}
 				<div class="space-y-2">
 					<Label>Periode</Label>
-					<Select.Root 
-						type="single" 
-						value={field.state.value} 
+					<Select.Root
+						type="single"
+						value={field.state.value}
 						onValueChange={(val) => field.handleChange(val as 'monthly' | 'yearly')}
 					>
 						<Select.Trigger class="w-full">

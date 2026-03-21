@@ -2,7 +2,7 @@
 	import { transactionSchema } from '$lib/schemas';
 	import { toast } from 'svelte-sonner';
 
-  const queryClient = useQueryClient()
+	const queryClient = useQueryClient();
 
 	type TransactionType = 'income' | 'expense' | 'transfer';
 
@@ -79,11 +79,11 @@
 
 				if (res.data?.message) {
 					toast.success(res.data.message);
-					
+
 					await queryClient.invalidateQueries({ queryKey: ['transactions'] });
 					await queryClient.invalidateQueries({ queryKey: ['wallets'] });
-					
-          open = false;
+
+					open = false;
 				} else if (res.error) {
 					toast.error('Terjadi kesalahan');
 				}

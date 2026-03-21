@@ -1,1 +1,1 @@
-export const sidebarStore = writable<boolean>(true)
+export const sidebarStore = writable<boolean>(true);

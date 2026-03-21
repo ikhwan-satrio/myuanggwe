@@ -6,7 +6,7 @@
 
 	const queryClient = useQueryClient();
 
-	const walletsQuery = createQuery(()=> ({
+	const walletsQuery = createQuery(() => ({
 		queryKey: ['wallets'],
 		queryFn: async () => {
 			const { data, error } = await client.wallets.get();
@@ -29,7 +29,7 @@
 		onSubmit: async ({ value }) => {
 			try {
 				//@ts-ignore
-        const res = await client.goals.create.post(value);
+				const res = await client.goals.create.post(value);
 				if (res.data?.success) {
 					toast.success(res.data.message);
 					await queryClient.invalidateQueries({ queryKey: ['goals'] });

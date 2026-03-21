@@ -1,10 +1,10 @@
 <script lang="ts">
 	import './layout.css';
-  import favicon from '$lib/assets/favicon.svg';
-  import { page } from '$app/state';
+	import favicon from '$lib/assets/favicon.svg';
+	import { page } from '$app/state';
 	import { Toaster } from '$lib/components/ui/sonner';
-  import Sidebar from '$lib/components/layout/Sidebar.svelte';
-  import Header from '$lib/components/layout/Header.svelte';
+	import Sidebar from '$lib/components/layout/Sidebar.svelte';
+	import Header from '$lib/components/layout/Header.svelte';
 	import { QueryClientProvider } from '@tanstack/svelte-query';
 	import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
 	import { ModeWatcher } from 'mode-watcher';
@@ -16,7 +16,7 @@
 	let organizations = $derived((data.organizations || []) as any[]);
 
 	let isAuthPage = $derived(page.url.pathname === '/login' || page.url.pathname === '/register');
-	
+
 	// Canonical URL Construction
 	const baseUrl = 'https://myuanggwe.vercel.app';
 	let canonicalUrl = $derived(`${baseUrl}${page.url.pathname === '/' ? '' : page.url.pathname}`);
@@ -28,7 +28,7 @@
 
 	<meta name="google-site-verification" content="bWRaoFVlyB345Wietszb9IvK4x9MIN9hvtEA9ChIgoQ" />
 
-  <title>MyUangGwe - Aplikasi Pengelola Keuangan Pribadi & Bisnis</title>
+	<title>MyUangGwe - Aplikasi Pengelola Keuangan Pribadi & Bisnis</title>
 	<meta
 		name="description"
 		content="MyUangGwe adalah aplikasi pengelola keuangan pribadi dan bisnis yang mudah digunakan untuk mencatat pengeluaran, pendapatan, dan mengatur anggaran secara real-time."
@@ -79,7 +79,7 @@
 				<Header {user} />
 				<main class="flex-1 overflow-x-hidden overflow-y-auto p-4 md:p-6">
 					{@render children()}
-        </main>
+				</main>
 			</div>
 		</div>
 	</Tooltip.Provider>

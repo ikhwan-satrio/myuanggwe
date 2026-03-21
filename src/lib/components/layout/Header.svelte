@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { toggleMode } from 'mode-watcher';
-  import { sidebarStore } from '$lib/stores/sidebar';
+	import { sidebarStore } from '$lib/stores/sidebar';
 
 	let { user } = $props();
 
@@ -9,7 +9,7 @@
 	onMount(() => {
 		isDarkMode = document.documentElement.classList.contains('dark');
 	});
-  
+
 	function toggleDarkMode() {
 		isDarkMode = !isDarkMode;
 		toggleMode();

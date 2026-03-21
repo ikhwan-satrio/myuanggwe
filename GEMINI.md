@@ -11,8 +11,9 @@
 ## 🏗️ Tech Stack
 
 ### **Frontend**
+
 - **Framework**: SvelteKit 5 (Svelte 5 with Runes: `$state`, `$derived`, `$effect`, `snippet`)
-- **State Management**: 
+- **State Management**:
   - **TanStack Query v6**: For server state synchronization, caching, and optimistic updates.
   - **Svelte Runes**: For reactive client-side state.
 - **Forms**: **TanStack Form v1.28** + **Zod** for schema-based validation.
@@ -22,6 +23,7 @@
 - **Icons**: Lucide Svelte (via custom wrapper).
 
 ### **Backend**
+
 - **API Framework**: **Elysia.js v1.4+** (High-performance, Bun-powered, end-to-end type safety).
 - **API Client**: **Eden Treaty** (Typesafe communication between SvelteKit and Elysia).
 - **Database**: **Turso (LibSQL/SQLite)** - Edge-ready distributed database.
@@ -30,6 +32,7 @@
 - **Cache**: **Upstash Redis** (Serverless Redis for high-speed data caching).
 
 ### **Infrastructure**
+
 - **Runtime**: Bun
 - **Deployment**: Vercel (SvelteKit Adapter)
 - **Database Hosting**: Turso
@@ -90,12 +93,14 @@ myuanggwe/
 ## 🗄️ Database Schema & Data Logic
 
 ### **Core Features**
+
 - **Atomic Transactions**: Wallet balances are updated within Drizzle database transactions to ensure consistency during Income, Expense, and Transfer operations.
 - **Transfers**: Built-in support for moving funds between wallets (Wallet Source → Wallet Destination).
 - **Row-Level Scoping**: Data is scoped by `userId` and optionally `organizationId`. Personal data has `organizationId = NULL`.
 - **Hybrid Timestamps**: Uses `timestamp_ms` for Auth tables and unix `timestamp` for App tables.
 
 ### **Tables**
+
 - **User/Session/Account**: Better Auth managed tables.
 - **Organization/Member/Invitation**: Multi-tenant support.
 - **Wallets**: Financial accounts (Cash, Bank, Credit Card).
@@ -107,27 +112,32 @@ myuanggwe/
 ## 🚀 Key Features & Data Flow
 
 ### **1. Real-Time Server Caching**
+
 - Powered by **Upstash Redis**.
 - **`withBackendCache`**: A wrapper that handles Cache-Hit/Miss logic with automatic logging.
 - **Vite-Style Logging**: Beautifully formatted terminal logs for cache operations (HIT, MISS, SET, INVALIDATE).
 - **Smart Invalidation**: Mutations in Wallets, Transactions, or Categories trigger a targeted invalidation of related cache keys (Layout, Dashboard, etc.).
 
 ### **2. Multi-Organization Switcher**
+
 - Users can switch between "Personal" and "Organization" contexts.
 - Context is stored in `session.activeOrganizationId`.
 - API endpoint `/api/changeOrgs/:id` handles the switch and clears relevant cache.
 
 ### **3. Typesafe API with Elysia + Eden**
+
 - **Elysia Macros**: Simplified auth checks using `.macro({ auth: true })`.
 - **Eden Treaty**: Provides full TypeScript intellisense for API calls in Svelte components.
 - **Middleware**: `userData` middleware derives organization context for all API requests.
 
 ### **4. Modern UI/UX**
+
 - **Svelte 5 Runes**: Leveraging the latest reactivity model for high performance.
 - **Tailwind 4**: Native CSS-first approach with better performance and simplified config.
 - **GSAP**: Smooth, professional animations for dashboard transitions.
 
 ### **5. DX & Automation (Unplugin)**
+
 - **`unplugin-auto-import`**: Automatically imports Svelte lifecycle hooks (`$state`, `$derived`, etc.), TanStack Query hooks, and custom composables.
   - **Namespace Mapping**: Multi-part UI components (e.g., `Card`, `Dialog`, `Select`) are automatically mapped as namespaces, allowing usage like `<Card.Root>` without manual imports.
 - **`unplugin-svelte-components`**: Automatically discovers and registers base UI components from `src/lib/components/ui` and `src/lib/components/utils`.

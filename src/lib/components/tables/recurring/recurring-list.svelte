@@ -76,22 +76,31 @@
 {:else}
 	<div class="rounded-md border bg-card">
 		{#each recurringItems as item (item.id)}
-			<div class="flex items-center justify-between border-b p-4 transition-colors last:border-0 hover:bg-muted/50">
+			<div
+				class="flex items-center justify-between border-b p-4 transition-colors last:border-0 hover:bg-muted/50"
+			>
 				<div class="flex items-center gap-3">
-					<div class={cn(
-						'rounded-full p-2',
-						item.type === 'income' ? 'bg-green-100 text-green-600' : 
-						item.type === 'expense' ? 'bg-red-100 text-red-600' : 'bg-blue-100 text-blue-600'
-					)}>
+					<div
+						class={cn(
+							'rounded-full p-2',
+							item.type === 'income'
+								? 'bg-green-100 text-green-600'
+								: item.type === 'expense'
+									? 'bg-red-100 text-red-600'
+									: 'bg-blue-100 text-blue-600'
+						)}
+					>
 						<Lucide name="Repeat" class="h-4 w-4" />
 					</div>
 					<div>
 						<p class="font-medium">
 							{item.description || item.category?.name || 'Transfer'}
-							<Badge variant="secondary" class="ml-2 text-[10px] capitalize">{item.frequency}</Badge>
+							<Badge variant="secondary" class="ml-2 text-[10px] capitalize">{item.frequency}</Badge
+							>
 						</p>
 						<p class="text-xs text-muted-foreground">
-							{item.wallet.name} {item.toWallet ? `→ ${item.toWallet.name}` : ''}
+							{item.wallet.name}
+							{item.toWallet ? `→ ${item.toWallet.name}` : ''}
 							• Berikutnya: {formatDate(item.nextRunDate)}
 						</p>
 					</div>
@@ -103,9 +112,7 @@
 							{item.isActive ? 'Aktif' : 'Nonaktif'}
 						</p>
 					</div>
-					<DropdownAction
-						onDelete={() => deleteRecurringMutation.mutate({ id: item.id })}
-					>
+					<DropdownAction onDelete={() => deleteRecurringMutation.mutate({ id: item.id })}>
 						{#snippet trigger({ props })}
 							<Button variant="outline" size="icon" {...props}>
 								<Lucide name="MoreVertical" class="h-4 w-4" />

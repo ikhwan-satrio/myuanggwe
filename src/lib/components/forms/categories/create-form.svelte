@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { categorySchema } from '$lib/schemas.js';
 	import { toast } from 'svelte-sonner';
-  
+
 	const queryClient = useQueryClient();
 
 	let { open = $bindable() } = $props();

@@ -1,42 +1,41 @@
 <script lang="ts">
 	const schema = {
-		"@context": "https://schema.org",
-		"@graph": [
+		'@context': 'https://schema.org',
+		'@graph': [
 			{
-				"@type": "WebSite",
-				"name": "MyUangGwe",
-				"url": "https://myuanggwe.vercel.app/",
-				"potentialAction": {
-					"@type": "SearchAction",
-					"target": "https://myuanggwe.vercel.app/?q={search_term_string}",
-					"query-input": "required name=search_term_string"
+				'@type': 'WebSite',
+				name: 'MyUangGwe',
+				url: 'https://myuanggwe.vercel.app/',
+				potentialAction: {
+					'@type': 'SearchAction',
+					target: 'https://myuanggwe.vercel.app/?q={search_term_string}',
+					'query-input': 'required name=search_term_string'
 				}
 			},
 			{
-				"@type": "SoftwareApplication",
-				"name": "MyUangGwe",
-				"applicationCategory": "FinanceApplication",
-				"operatingSystem": "Web",
-				"offers": {
-					"@type": "Offer",
-					"price": "0",
-					"priceCurrency": "USD"
+				'@type': 'SoftwareApplication',
+				name: 'MyUangGwe',
+				applicationCategory: 'FinanceApplication',
+				operatingSystem: 'Web',
+				offers: {
+					'@type': 'Offer',
+					price: '0',
+					priceCurrency: 'USD'
 				},
-				"description": "Powerful personal and business finance management app. Track expenses, manage wallets, and collaborate with teams.",
-				"aggregateRating": {
-					"@type": "AggregateRating",
-					"ratingValue": "4.8",
-					"ratingCount": "120"
+				description:
+					'Powerful personal and business finance management app. Track expenses, manage wallets, and collaborate with teams.',
+				aggregateRating: {
+					'@type': 'AggregateRating',
+					ratingValue: '4.8',
+					ratingCount: '120'
 				}
 			},
 			{
-				"@type": "Organization",
-				"name": "MyUangGwe",
-				"url": "https://myuanggwe.vercel.app",
-				"logo": "https://myuanggwe.vercel.app/favicon.svg",
-				"sameAs": [
-					"https://github.com/wanto-production"
-				]
+				'@type': 'Organization',
+				name: 'MyUangGwe',
+				url: 'https://myuanggwe.vercel.app',
+				logo: 'https://myuanggwe.vercel.app/favicon.svg',
+				sameAs: ['https://github.com/wanto-production']
 			}
 		]
 	};
@@ -57,8 +56,8 @@
 		<div
 			class="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px]"
 		></div>
-    
-    <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+
+		<div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
 			<div class="text-center">
 				<h1 class="mb-6 text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
 					Take control of your

@@ -7,7 +7,7 @@
 	let { open = $bindable(false) } = $props();
 
 	const queryClient = useQueryClient();
-  
+
 	// Query wallets
 	const walletsQuery = createQuery(() => ({
 		queryKey: ['wallets'],
@@ -223,7 +223,7 @@
 						<div class="space-y-2">
 							<Label>Kategori</Label>
 							<Select.Root
-              disabled={categoriesQuery.isPending}
+								disabled={categoriesQuery.isPending}
 								type="single"
 								value={field.state.value}
 								onValueChange={field.handleChange}

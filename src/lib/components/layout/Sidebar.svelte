@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { authClient } from '$lib/auth/auth-client';
+	import { authClient } from '$lib/auth/auth-client';
 	import { goto, invalidate } from '$app/navigation';
 	import type { User as UserType } from 'better-auth';
 	import type { OrganizationType } from '$lib/server/db/schema';
 	import { page } from '$app/state';
 	import { toast } from 'svelte-sonner';
-  import { sidebarStore } from '$lib/stores/sidebar';
+	import { sidebarStore } from '$lib/stores/sidebar';
 
 	const queryClient = useQueryClient();
 

@@ -101,9 +101,9 @@
 			<walletsForm.Field name="type">
 				{#snippet children(field)}
 					<Label>Tipe</Label>
-					<Select.Root 
-						type="single" 
-						name="type" 
+					<Select.Root
+						type="single"
+						name="type"
 						value={field.state.value}
 						onValueChange={(val) => field.handleChange(val as 'cash' | 'bank' | 'credit_card')}
 					>
@@ -148,7 +148,8 @@
 								class: 'w-full justify-between text-left font-normal'
 							})}
 						>
-							{currencyOptions.find((c) => c.value === field.state.value)?.label ?? 'Pilih Mata Uang'}
+							{currencyOptions.find((c) => c.value === field.state.value)?.label ??
+								'Pilih Mata Uang'}
 						</Select.Trigger>
 						<Select.Content>
 							{#each currencyOptions as option (option.value)}

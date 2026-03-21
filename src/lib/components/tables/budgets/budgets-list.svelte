@@ -65,7 +65,7 @@
 	<div class="space-y-4">
 		{#each Array(3) as _, i (i)}
 			<div class="rounded-md border p-4">
-				<div class="flex items-center justify-between mb-2">
+				<div class="mb-2 flex items-center justify-between">
 					<Skeleton class="h-5 w-32" />
 					<Skeleton class="h-5 w-24" />
 				</div>
@@ -83,7 +83,7 @@
 			{@const progress = Math.min((budget.currentSpending / budget.amount) * 100, 100)}
 			{@const isOverBudget = budget.currentSpending > budget.amount}
 			<div class="rounded-md border bg-card p-4">
-				<div class="flex items-center justify-between mb-3">
+				<div class="mb-3 flex items-center justify-between">
 					<div class="flex items-center gap-2">
 						{#if budget.category.icon}
 							<span>{budget.category.icon}</span>
@@ -106,7 +106,7 @@
 				</div>
 
 				<div class="space-y-2">
-					<div class="h-2 w-full rounded-full bg-muted overflow-hidden">
+					<div class="h-2 w-full overflow-hidden rounded-full bg-muted">
 						<div
 							class={cn(
 								'h-full transition-all duration-500',
@@ -117,10 +117,12 @@
 					</div>
 
 					<div class="flex justify-between text-xs">
-						<span class={cn(isOverBudget && 'text-destructive font-bold')}>
+						<span class={cn(isOverBudget && 'font-bold text-destructive')}>
 							{formatCurrency(budget.currentSpending)} / {formatCurrency(budget.amount)}
 						</span>
-						<span class="text-muted-foreground">{Math.round((budget.currentSpending / budget.amount) * 100)}%</span>
+						<span class="text-muted-foreground"
+							>{Math.round((budget.currentSpending / budget.amount) * 100)}%</span
+						>
 					</div>
 				</div>
 			</div>

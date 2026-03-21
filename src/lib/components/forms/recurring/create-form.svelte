@@ -78,7 +78,8 @@
 		wallets.find((w) => w.id === recurringForm.state.values.walletId)?.name || 'Pilih Dompet'
 	);
 	let selectedToWallet = $derived(
-		wallets.find((w) => w.id === recurringForm.state.values.toWalletId)?.name || 'Pilih Dompet Tujuan'
+		wallets.find((w) => w.id === recurringForm.state.values.toWalletId)?.name ||
+			'Pilih Dompet Tujuan'
 	);
 	let selectedCategory = $derived(
 		categories.find((c) => c.id === recurringForm.state.values.categoryId)?.name || 'Pilih Kategori'
@@ -145,7 +146,8 @@
 					<Select.Root
 						type="single"
 						value={field.state.value}
-						onValueChange={(val) => field.handleChange(val as 'daily' | 'weekly' | 'monthly' | 'yearly')}
+						onValueChange={(val) =>
+							field.handleChange(val as 'daily' | 'weekly' | 'monthly' | 'yearly')}
 					>
 						<Select.Trigger class="w-full">
 							{frequencyOptions.find((f) => f.value === field.state.value)?.label}
@@ -204,7 +206,11 @@
 				{#snippet children(field)}
 					<div class="space-y-2">
 						<Label>Dompet Tujuan</Label>
-						<Select.Root type="single" value={field.state.value || ''} onValueChange={field.handleChange}>
+						<Select.Root
+							type="single"
+							value={field.state.value || ''}
+							onValueChange={field.handleChange}
+						>
 							<Select.Trigger class="w-full">
 								{selectedToWallet}
 							</Select.Trigger>
@@ -224,12 +230,16 @@
 				{#snippet children(field)}
 					<div class="space-y-2">
 						<Label>Kategori</Label>
-						<Select.Root type="single" value={field.state.value || ''} onValueChange={field.handleChange}>
+						<Select.Root
+							type="single"
+							value={field.state.value || ''}
+							onValueChange={field.handleChange}
+						>
 							<Select.Trigger class="w-full">
 								{selectedCategory}
 							</Select.Trigger>
 							<Select.Content>
-								{#each categories.filter(c => c.type === recurringForm.state.values.type) as category (category.id)}
+								{#each categories.filter((c) => c.type === recurringForm.state.values.type) as category (category.id)}
 									<Select.Item value={category.id} label={category.name}>
 										{category.name}
 									</Select.Item>
